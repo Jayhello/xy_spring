@@ -135,7 +135,7 @@ public class ApplicationContext {
             
             // 创建实例
             // Create instance
-            Object instance = clazz.newInstance();
+            Object instance = clazz.getDeclaredConstructor().newInstance();
             
             // 存储到容器
             // Store in container
@@ -298,7 +298,8 @@ public class ApplicationContext {
             return null;
         }
         if (beanNames.size() > 1) {
-            throw new RuntimeException("Multiple beans found for type: " + type.getName());
+            throw new RuntimeException("Multiple beans found for type: " + type.getName() + 
+                                     ". Found beans: " + beanNames);
         }
         return beanMap.get(beanNames.get(0));
     }

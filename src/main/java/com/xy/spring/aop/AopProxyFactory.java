@@ -76,7 +76,13 @@ public class AopProxyFactory {
             
             // 如果有环绕通知，使用环绕通知
             // If there are around advices, use around advice
+            // 注意：如果有多个环绕通知，只执行第一个
+            // Note: If there are multiple around advices, only the first one is executed
             if (!aroundAdvices.isEmpty()) {
+                if (aroundAdvices.size() > 1) {
+                    System.out.println("Warning: Multiple @Around advices found for method " + 
+                                     method.getName() + ", only executing the first one");
+                }
                 return executeAroundAdvice(aroundAdvices.get(0), method, args);
             }
             
