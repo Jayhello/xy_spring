@@ -142,26 +142,6 @@ public class ApplicationContext {
     }
 
     /**
-     * 实例化Bean
-     */
-    private void instantiateBeans(List<Class<?>> classes) throws Exception {
-        for (Class<?> clazz : classes) {
-            if (clazz.isAnnotationPresent(Component.class) && !clazz.isAnnotationPresent(Aspect.class)) {
-                Object bean = clazz.newInstance();
-                
-                // 如果需要AOP代理，创建代理对象
-                if (needProxy(clazz)) {
-                    bean = AopProxyFactory.createProxy(bean, aspectMethods);
-                }
-                
-                String beanName = getBeanName(clazz);
-                beanMap.put(beanName, bean);
-                beanMap.put(clazz.getName(), bean);
-            }
-        }
-    }
-
-    /**
      * 判断是否需要代理
      */
     private boolean needProxy(Class<?> clazz) {

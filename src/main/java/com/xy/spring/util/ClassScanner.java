@@ -27,9 +27,12 @@ public class ClassScanner {
                     String filePath = url.getPath();
                     findClassesByFile(packageName, filePath, classes);
                 }
+            } else {
+                System.err.println("Warning: Package not found: " + packageName);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error scanning package '" + packageName + "': " + e.getMessage());
+            throw new RuntimeException("Failed to scan package: " + packageName, e);
         }
         
         return classes;
@@ -57,7 +60,7 @@ public class ClassScanner {
                 try {
                     classes.add(Class.forName(className));
                 } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
+                    System.err.println("Warning: Could not load class '" + className + "': " + e.getMessage());
                 }
             }
         }
